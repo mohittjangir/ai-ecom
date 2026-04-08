@@ -3,57 +3,364 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Shop - Premium E-commerce</title>
+    <title>AI Shop – Premium E‑commerce</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #f8fafc; --card: white; --text: #1e293b; --primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%); --accent: #ff6b6b; }
-        [data-theme="dark"] { --bg: #0f172a; --card: #1e293b; --text: #f1f5f9; }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
-        header { background: var(--primary); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
-        .logo { font-size: 1.8rem; font-weight: bold; }
-        nav { display: flex; gap: 1rem; align-items: center; }
-        nav a, .btn { color: white; text-decoration: none; background: rgba(255,255,255,0.2); padding: 0.5rem 1rem; border-radius: 25px; backdrop-filter: blur(10px); transition: all 0.3s; }
-        nav a:hover, .btn:hover { transform: translateY(-2px); }
-        #search { padding: 0.5rem; border-radius: 25px; border: none; width: 250px; }
-        #hero { position: relative; height: 70vh; overflow: hidden; }
-        .hero-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; color: white; text-align: center; opacity: 0; transition: opacity 1s; }
-        .hero-slide.active { opacity: 1; }
-        .hero-content { background: rgba(0,0,0,0.6); padding: 2rem; border-radius: 20px; max-width: 800px; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
-        .section { margin: 4rem 0; }
-        .section h2 { text-align: center; margin-bottom: 3rem; font-size: 2.5rem; }
-        .categories { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin: 2rem 0; }
-        .cat-btn { background: rgba(255,255,255,0.2); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 25px; cursor: pointer; transition: all 0.3s; }
-        .cat-btn.active, .cat-btn:hover { background: var(--accent); transform: scale(1.05); }
-        .products, .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
-        .product, .feature-card { background: var(--card); padding: 1.5rem; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); backdrop-filter: blur(10px); transition: all 0.4s; position: relative; overflow: hidden; text-align: center; }
-        .product:hover, .feature-card:hover { transform: translateY(-10px); box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
-        .product img, .feature-card img { width: 100%; height: 220px; object-fit: cover; border-radius: 15px; }
-        .price { font-size: 1.8rem; color: #10b981; font-weight: bold; }
-        .rating { color: #fbbf24; margin: 0.5rem 0; }
-        .wishlist { position: absolute; top: 1rem; right: 1rem; background: rgba(255,255,255,0.9); border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-size: 1.2rem; }
-        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 2rem; text-align: center; }
-        .stat-num { font-size: 3rem; font-weight: bold; color: var(--accent); }
-        .testimonials { display: flex; gap: 2rem; overflow-x: auto; padding: 2rem 0; }
-        .testimonial { background: var(--card); padding: 2rem; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); flex: 1; min-width: 300px; }
-        .faq { display: grid; gap: 1rem; }
-        details { background: var(--card); padding: 1.5rem; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
-        summary { font-weight: bold; cursor: pointer; }
-        footer { background: var(--primary); color: white; padding: 3rem 2rem; text-align: center; }
-        .social-links { display: flex; gap: 1rem; justify-content: center; margin: 1rem 0; }
-        .social-links a { color: white; font-size: 1.5rem; }
-        #cart, #auth-modal, #newsletter { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--card); padding: 2rem; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); z-index: 1000; min-width: 400px; }
-        .close { position: absolute; top: 1rem; right: 1rem; font-size: 1.5rem; cursor: pointer; }
-        #dark-toggle { background: none; border: none; font-size: 1.5rem; cursor: pointer; }
-        @keyframes fly { 0% { transform: scale(1) translateY(0); } 50% { transform: scale(1.2) translate(50px, -50px); } 100% { transform: scale(0) translate(100px, -100px); opacity: 0; } }
-        .fly-item { animation: fly 0.8s ease-out forwards; }
-        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
-        @media (max-width: 768px) { .products, .features-grid { grid-template-columns: 1fr; } nav { flex-direction: column; gap: 0.5rem; } }
+        :root {
+            --bg: #f8fafc;
+            --card: white;
+            --text: #1e293b;
+            --primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --accent: #ff6b6b;
+            --transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        [data-theme="dark"] {
+            --bg: #0f172a;
+            --card: #1e293b;
+            --text: #f1f5f9;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            transition: background var(--transition), color var(--transition);
+        }
+        /* Enhanced header */
+        header {
+            background: var(--primary);
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: transform var(--transition);
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: logoFadeIn 0.8s ease-out 0.2s forwards;
+        }
+        nav {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: navFadeIn 0.8s ease-out 0.4s forwards;
+        }
+        nav a, .btn {
+            color: white;
+            text-decoration: none;
+            background: rgba(255, 255, 255, 0.25);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+            transition: all var(--transition);
+        }
+        nav a:hover, .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        #search {
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            width: 250px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            transition: all var(--transition);
+        }
+        #search:focus {
+            outline: none;
+            border-color: white;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+        #hero {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 5rem 2rem;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: sectionFadeIn 0.8s ease-out 0.6s forwards;
+        }
+        .hero-text {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .section {
+            margin: 4rem 0;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .categories {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+        .cat-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+        .cat-btn.active, .cat-btn:hover {
+            background: var(--accent);
+            transform: scale(1.05);
+        }
+        .products, .features-grid, .stats, .faq, .blog-preview, .team-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .product, .feature-card, .testimonial, .blog-card, .team-card {
+            background: var(--card);
+            padding: 1.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            transition: all var(--transition);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        .product.visible, .feature-card.visible, .testimonial.visible, .blog-card.visible, .team-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .product:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        }
+        .product img, .feature-card img, .blog-card img, .team-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 15px;
+            transition: transform var(--transition);
+        }
+        .product img:hover {
+            transform: scale(1.05);
+        }
+        .price {
+            font-size: 1.8rem;
+            color: #10b981;
+            font-weight: bold;
+            margin: 0.5rem 0;
+        }
+        .rating {
+            color: #fbbf24;
+            margin: 0.25rem 0;
+        }
+        .wishlist {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: transform var(--transition);
+        }
+        .wishlist:hover {
+            transform: scale(1.15);
+        }
+        #cart, #auth-modal, #newsletter {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--card);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            min-width: 400px;
+            opacity: 0;
+            transform: translate(-50%, -70%);
+            animation: modalFadeIn 0.4s ease-out forwards;
+        }
+        .close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text);
+            transition: transform var(--transition);
+        }
+        .close:hover {
+            transform: rotate(90deg);
+        }
+        #dark-toggle {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform var(--transition);
+        }
+        #dark-toggle:hover {
+            transform: rotateZ(180deg);
+        }
+        .slider {
+            overflow: hidden;
+        }
+        @keyframes fly {
+            0% { transform: scale(1) translateY(0); }
+            50% { transform: scale(1.2) translate(50px, -50px); }
+            100% { transform: scale(0) translate(100px, -100px); opacity: 0; }
+        }
+        .fly-item {
+            animation: fly 0.8s ease-out forwards;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        /* Animations */
+        @keyframes logoFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes navFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes sectionFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -70%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+        .stat {
+            text-align: center;
+        }
+        .stat-num {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--accent);
+        }
+        .team-section, .blog-preview {
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        }
+        .team-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .team-card .name {
+            margin: 0.5rem 0;
+            font-weight: 600;
+        }
+        .team-card .role {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+        .footer {
+            background: var(--primary);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-top: 4rem;
+            transition: background var(--transition);
+        }
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 1rem 0;
+        }
+        .social-links a {
+            color: white;
+            font-size: 1.3rem;
+            transition: transform var(--transition);
+        }
+        .social-links a:hover {
+            transform: translateY(-3px);
+        }
+        .footer p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+        @media (max-width: 768px) {
+            .products, .features-grid, .stats, .faq, .blog-preview, .team-section, .testimonial {
+                grid-template-columns: 1fr;
+            }
+            nav {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
     </style>
 </head>
 <body>
     <header>
-        <div class="logo">🚀 AI Shop</div>
+        <div class="logo">
+            <span>🚀</span> AI Shop
+        </div>
         <nav>
             <input type="text" id="search" placeholder="🔍 Search products...">
             <button id="login-btn">Login</button>
@@ -62,28 +369,15 @@
         </nav>
     </header>
 
-    <!-- Hero Slider -->
+    <!-- Hero section -->
     <section id="hero">
-        <div class="hero-slide active" style="background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1920&auto=format&fit=crop');">
-            <div class="hero-content">
-                <h1>Premium AI & Hardware</h1>
-                <p>Next-gen tools for tracking, detection & computing. Worldwide shipping.</p>
-            </div>
-        </div>
-        <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=1920&auto=format&fit=crop');">
-            <div class="hero-content">
-                <h1>Neural Network Power</h1>
-                <p>Enterprise-grade AI solutions for professionals.</p>
-            </div>
-        </div>
-        <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1558618047-8c40e08d695e?w=1920&auto=format&fit=crop');">
-            <div class="hero-content">
-                <h1>Future-Proof Hardware</h1>
-                <p>GPUs, TPUs, and edge devices for AI workloads.</p>
-            </div>
+        <div class="hero-text">
+            <h1>Discover Premium AI & Hardware</h1>
+            <p>Next‑gen tools for tracking, detection, and high‑performance computing. Fast shipping worldwide.</p>
         </div>
     </section>
 
+    <!-- Main product and content section -->
     <div class="container">
         <!-- Categories -->
         <div class="categories">
@@ -96,45 +390,40 @@
         <div id="products" class="products"></div>
     </div>
 
-    <!-- Features Section -->
-    <section class="section container">
-        <h2>Why Choose AI Shop?</h2>
+    <!-- Features section -->
+    <section class="container section">
+        <h2 style="text-align: center; margin-bottom: 2rem; font-size: 2rem;">Why AI Shop?</h2>
         <div class="features-grid">
             <div class="feature-card">
-                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&fit=crop" alt="Fast Delivery">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&fit=crop" alt="Lightning fast delivery" class="visible">
                 <h3>Lightning Fast Delivery</h3>
-                <p>Express shipping worldwide with 24-48 hour delivery guarantee.</p>
+                <p>Express shipping worldwide with 24–48 hour delivery for most orders.</p>
             </div>
             <div class="feature-card">
-                <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&fit=crop" alt="Support">
-                <h3>24/7 Expert Support</h3>
-                <p>AI specialists available round the clock for technical assistance.</p>
+                <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&fit=crop" alt="24/7 support" class="visible">
+                <h3>24/7 AI Support</h3>
+                <p>Expert AI engineers available round‑the‑clock for setup and troubleshooting.</p>
             </div>
             <div class="feature-card">
-                <img src="https://images.unsplash.com/photo-1517433456452-f1633a875f6f?w=400&fit=crop" alt="Security">
-                <h3>Secure Payments</h3>
-                <p>PCI-compliant payment processing with bank-level encryption.</p>
-            </div>
-            <div class="feature-card">
-                <img src="https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=400&fit=crop" alt="Warranty">
+                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&fit=crop" alt="Lifetime warranty" class="visible">
                 <h3>Lifetime Warranty</h3>
-                <p>Full replacement coverage for all AI hardware products.</p>
+                <p>Full hardware replacement coverage and lifetime support for all products.</p>
             </div>
             <div class="feature-card">
-                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&fit=crop" alt="Training">
+                <img src="https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=400&fit=crop" alt="Free training" class="visible">
                 <h3>Free Training</h3>
-                <p>Complete setup and training sessions included with every purchase.</p>
+                <p>Personalized onboarding sessions and documentation for every purchase.</p>
             </div>
             <div class="feature-card">
-                <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?w=400&fit=crop" alt="Updates">
-                <h3>Lifetime Updates</h3>
-                <p>Free software updates and model improvements forever.</p>
+                <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?w=400&fit=crop" alt="Regular updates" class="visible">
+                <h3>Regular Updates</h3>
+                <p>Free software and model updates delivered automatically.</p>
             </div>
         </div>
     </section>
 
-    <!-- Stats Section -->
-    <section class="section container">
+    <!-- Stats section -->
+    <section class="container section">
         <div class="stats">
             <div class="stat">
                 <div class="stat-num" data-target="50000">0</div>
@@ -146,198 +435,25 @@
             </div>
             <div class="stat">
                 <div class="stat-num" data-target="99.9">0</div>
-                <p>% Uptime</div>
+                <p>% Uptime</p>
             </div>
             <div class="stat">
                 <div class="stat-num" data-target="100000">0</div>
-                <p>Happy Customers</p>
+                <p>Happy Developers</p>
             </div>
         </div>
     </section>
 
     <!-- Testimonials -->
-    <section class="section container">
-        <h2>What Our Customers Say</h2>
+    <section class="container section">
+        <h2 style="text-align: center; margin-bottom: 2rem; font-size: 2rem;">What Our Customers Say</h2>
         <div class="testimonials">
-            <div class="testimonial">
-                <p>"The DeepSORT tracker completely transformed our warehouse automation. 99.9% accuracy!"</p>
-                <div><strong>- Dr. Sarah Chen, NeuralTech CEO</strong></div>
+            <div class="testimonial visible">
+                <p>“The DeepSORT tracker transformed our warehouse automation pipeline. We now run at near‑perfect precision.”</p>
+                <div class="rating">⭐ ⭐ ⭐ ⭐ ⭐</div>
+                <div><strong>— Dr. Priya Mehta, Robotics Lead</strong></div>
             </div>
-            <div class="testimonial">
-                <p>"RTX 5090 arrived next day and runs YOLOv8 at 120fps. Incredible performance!"</p>
-                <div><strong>- Mike Rodriguez, AI Engineer</strong></div>
-            </div>
-            <div class="testimonial">
-                <p>"Best customer service ever. Setup training was worth thousands alone."</p>
-                <div><strong>- Priya Sharma, Robotics Lead</strong></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ -->
-    <section class="section container">
-        <h2>Frequently Asked Questions</h2>
-        <div class="faq">
-            <details>
-                <summary>How fast is shipping?</summary>
-                <p>Express worldwide shipping: 24-48 hours to most locations. Free over $500.</p>
-            </details>
-            <details>
-                <summary>Do you provide technical support?</summary>
-                <p>24/7 expert AI support included. Free training sessions with every purchase.</p>
-            </details>
-            <details>
-                <summary>Are models compatible with ROS2?</summary>
-                <p>All our AI tools are fully compatible with ROS2, ROS1, and Docker containers.</p>
-            </details>
-            <details>
-                <summary>What payment methods?</summary>
-                <p>Credit cards, PayPal, Stripe, Apple Pay, Google Pay, crypto (BTC/ETH).</p>
-            </details>
-        </div>
-    </section>
-
-    <!-- Modals (same as original) -->
-    <div id="cart">
-        <span class="close" onclick="toggleCart()">&times;</span>
-        <h2>🛒 Shopping Cart</h2>
-        <div id="cart-items"></div>
-        <div id="total"></div>
-        <button class="btn" onclick="checkout()">💳 Checkout</button>
-    </div>
-    <div id="auth-modal">
-        <span class="close" onclick="closeAuth()">&times;</span>
-        <h2 id="auth-title">Login</h2>
-        <input type="text" id="username" placeholder="Username" required><br><br>
-        <input type="password" id="password" placeholder="Password" required><br><br>
-        <button class="btn" onclick="handleAuth()">Submit</button>
-        <p id="auth-toggle" style="cursor: pointer; color: var(--accent);">Need account? Register</p>
-    </div>
-    <div id="newsletter">
-        <span class="close" onclick="closeNewsletter()">&times;</span>
-        <h2>📧 Join Newsletter</h2>
-        <input type="email" id="email-news" placeholder="Your email">
-        <button class="btn" onclick="signupNewsletter()">Subscribe</button>
-    </div>
-
-    <footer>
-        <div class="social-links">
-            <a href="#">🐦 Twitter</a>
-            <a href="#">💼 LinkedIn</a>
-            <a href="#">📘 Facebook</a>
-            <a href="#">📷 Instagram</a>
-        </div>
-        <p>&copy; 2026 AI Shop. All rights reserved. | Premium AI & Hardware Solutions</p>
-    </footer>
-
-    <script>
-        // 20+ products with real images
-        const products = [
-            { id: 1, name: 'DeepSORT Tracker Pro', price: 129, img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&fit=crop', category: 'AI', rating: 4.8 },
-            { id: 2, name: 'YOLOv8 Real-Time Detector', price: 199, img: 'https://images.unsplash.com/photo-1558618047-8c40e08d695e?w=400&fit=crop', category: 'AI', rating: 4.9 },
-            { id: 3, name: 'NVIDIA RTX 5090 GPU', price: 1999, img: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&fit=crop', category: 'Hardware', rating: 4.7 },
-            { id: 4, name: 'AI Development Laptop', price: 1499, img: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&fit=crop', category: 'Hardware', rating: 4.6 },
-            { id: 5, name: 'MOT17 Training Dataset', price: 49, img: 'https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=400&fit=crop', category: 'AI', rating: 4.5 },
-            { id: 6, name: 'Google Edge TPU v2', price: 299, img: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&fit=crop', category: 'Hardware', rating: 4.4 },
-            { id: 7, name: 'ByteTrack Multi-Object', price: 89, img: 'https://images.unsplash.com/photo-1573164713988-8665fc963095?w=400&fit=crop', category: 'AI', rating: 4.9 },
-            { id: 8, name: 'Intel Neural Compute', price: 399, img: 'https://images.unsplash.com/photo-1517433456452-f1633a875f6f?w=400&fit=crop', category: 'Hardware', rating: 4.7 },
-            { id: 9, name: 'FairMOT Tracker', price: 159, img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&fit=crop', category: 'AI', rating: 4.8 },
-            { id: 10, name: 'AI Training Server', price: 2999, img: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&fit=crop', category: 'Hardware', rating: 4.9 },
-            { id: 11, name: 'CenterNet Detector', price: 179, img: 'https://images.unsplash.com/photo-1558618047-8c40e08d695e?w=400&fit=crop', category: 'AI', rating: 4.6 },
-            { id: 12, name: 'Jetson Nano Dev Kit', price: 149, img: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&fit=crop', category: 'Hardware', rating: 4.5 }
-        ];
-
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
-        let user = JSON.parse(localStorage.getItem('user')) || null;
-        let currentCat = 'all';
-
-        // Hero slider
-        let heroIndex = 0;
-        const slides = document.querySelectorAll('.hero-slide');
-        setInterval(() => {
-            slides[heroIndex].classList.remove('active');
-            heroIndex = (heroIndex + 1) % slides.length;
-            slides[heroIndex].classList.add('active');
-        }, 4000);
-
-        // All your existing functions (renderProducts, addToCart, etc.) - same as original
-        const darkToggle = document.getElementById('dark-toggle');
-        darkToggle.addEventListener('click', () => document.body.dataset.theme = document.body.dataset.theme === 'dark' ? 'light' : 'dark');
-
-        function renderProducts(filter = '', cat = 'all') {
-            const container = document.getElementById('products');
-            let filtered = products.filter(p => 
-                p.name.toLowerCase().includes(filter.toLowerCase()) && 
-                (cat === 'all' || p.category === cat)
-            );
-            container.innerHTML = filtered.map(p => {
-                const isWish = wishlist.includes(p.id);
-                return `
-                    <div class="product">
-                        <button class="wishlist" onclick="toggleWishlist(${p.id})">${isWish ? '❤️' : '🤍'}</button>
-                        <img src="${p.img}" alt="${p.name}">
-                        <h3>${p.name}</h3>
-                        <div class="rating">⭐ ${'★'.repeat(Math.floor(p.rating))}${p.rating % 1 ? '☆' : ''} (${p.rating})</div>
-                        <p class="price">$${p.price}</p>
-                        <button class="btn fly-item" onclick="addToCart(${p.id}, this)">Add to Cart</button>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function addToCart(id, btn) {
-            btn.classList.add('fly-item');
-            setTimeout(() => btn.classList.remove('fly-item'), 800);
-            const product = products.find(p => p.id === id);
-            const cartItem = cart.find(item => item.id === id);
-            if (cartItem) cartItem.qty += 1; else cart.push({...product, qty: 1});
-            localStorage.setItem('cart', JSON.stringify(cart));
-            updateCartCount();
-        }
-
-        function updateCartCount() {
-            document.getElementById('cart-count').textContent = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
-        }
-
-        function toggleWishlist(id) {
-            const idx = wishlist.indexOf(id);
-            if (idx > -1) wishlist.splice(idx, 1); else wishlist.push(id);
-            localStorage.setItem('wishlist', JSON.stringify(wishlist));
-            renderProducts(document.getElementById('search').value, currentCat);
-        }
-
-        // Stats counter animation
-        function animateStats() {
-            const stats = document.querySelectorAll('.stat-num');
-            stats.forEach(stat => {
-                const target = parseFloat(stat.getAttribute('data-target'));
-                const count = parseFloat(stat.innerText) || 0;
-                const increment = target / 100;
-                if (count < target) {
-                    stat.innerText = Math.min(count + increment, target).toFixed(target === 99.9 ? 1 : 0);
-                    requestAnimationFrame(animateStats);
-                }
-            });
-        }
-
-        // Event listeners (same as original + new ones)
-        document.querySelectorAll('.cat-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelector('.cat-btn.active').classList.remove('active');
-                btn.classList.add('active');
-                currentCat = btn.dataset.cat;
-                renderProducts(document.getElementById('search').value, currentCat);
-            });
-        });
-
-        document.getElementById('search').addEventListener('input', (e) => renderProducts(e.target.value, currentCat));
-
-        // Init
-        if (user) document.getElementById('login-btn').textContent = `Hi, ${user.uname}`;
-        renderProducts();
-        updateCartCount();
-        animateStats();
-    </script>
-</body>
-</html>
+            <div class="testimonial visible">
+                <p>“The RTX 5090 arrived the next day and runs YOLOv8 at 120 FPS in real time.”</p>
+                <div class="rating">⭐ ⭐ ⭐ ⭐ ⭐</div>
+                <div><strong>— Mark Liu, Vision Engineer</strong></div>
